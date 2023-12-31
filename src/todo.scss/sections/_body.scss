@@ -1,0 +1,16 @@
+@use "../abstract/color" as *;
+@use "../abstract/mixin" as *;
+
+body {
+  background-color: $background_color;
+}
+
+.content {
+  margin: 30px;
+  padding: 15px;
+}
+
+#due_date {
+  @include flex_center;
+  flex-direction: row;
+}
