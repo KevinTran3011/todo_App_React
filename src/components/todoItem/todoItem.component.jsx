@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import "bootstrap/dist/css/bootstrap.min.css";
 import CheckIcon from "@mui/icons-material/Check";
-import ClearIcon from "@mui/icons-material/Clear";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 const TodoItem = (props) => {
   const {
     id,
@@ -102,7 +101,7 @@ const TodoItem = (props) => {
           className="modified_button--delete"
           onClick={() => deleteTask(id)}
         >
-          <ClearIcon></ClearIcon>{" "}
+          <DeleteIcon></DeleteIcon>{" "}
         </button>
       </div>
     </li>
