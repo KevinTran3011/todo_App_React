@@ -1,15 +1,9 @@
-import { useState } from "react";
-
-const LoadingSpinner = () => {
-  const [loading, setLoading] = useState(true);
-
-  const showLoading = () => {
-    setLoading(true);
-  };
-
-  const hideLoading = () => {
-    setLoading(false);
-  };
+/* eslint-disable react/prop-types */
+// LoadingSpinner component
+const LoadingSpinner = ({ loading }) => {
+  if (!loading) {
+    return null;
+  }
 
   return (
     <div className="spinner_container">

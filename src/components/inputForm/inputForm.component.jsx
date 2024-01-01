@@ -3,12 +3,13 @@ import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 
-const InputForm = ({ setTasks }) => {
+const InputForm = ({ setTasks, setLoading }) => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [newTask, setNewTask] = useState({ description: "", dueDate: "" });
 
   const addTask = async () => {
     try {
+      setLoading(true);
       await fetch(`https://658a8a68ba789a9622374750.mockapi.io/tasks`, {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -27,6 +28,8 @@ const InputForm = ({ setTasks }) => {
       setFormIsOpen(false);
     } catch (err) {
       console.log("Error occured while fetching tasks : " + err.message);
+    } finally {
+      setLoading(false);
     }
   };
 

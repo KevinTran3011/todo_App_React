@@ -1,12 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
-// import MaterialIcon, { colorPalette } from 'material-icons-react';
+
 const TodoItem = (props) => {
-  const { id, description, dueDate, setTasks, isCompleted, setIsCompleted } =
-    props;
+  const {
+    id,
+    description,
+    dueDate,
+    setTasks,
+    isCompleted,
+    setIsCompleted,
+    setLoading,
+  } = props;
 
   const reformatDate = (dueDate) => {
     const date = new Date(dueDate);
@@ -18,6 +24,7 @@ const TodoItem = (props) => {
 
   const deleteTask = async (id) => {
     try {
+      setLoading(true);
       await fetch(`https://658a8a68ba789a9622374750.mockapi.io/tasks/${id}`, {
         method: "DELETE",
         headers: { "content-type": "application/json" },
@@ -36,11 +43,14 @@ const TodoItem = (props) => {
       console.log(
         `Error occurred while deleting task with id ${id}: ${err.message}`
       );
+    } finally {
+      setLoading(false);
     }
   };
 
   const completeTask = async (task) => {
     try {
+      setLoading(true);
       const { id, isCompleted } = task;
       const response = await fetch(
         `https://658a8a68ba789a9622374750.mockapi.io/tasks/${id}`,
@@ -67,6 +77,8 @@ const TodoItem = (props) => {
       console.log(
         `Error occurred while completing task with id ${id} : ${err.message}`
       );
+    } finally {
+      setLoading(false);
     }
   };
 
