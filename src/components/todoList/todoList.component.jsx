@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import TitleContainer from "../titleContainer/titleContainer.component";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import LanguageSelector from "../languageSelector/languageSelector.component";
 import TodoItem from "../todoItem/todoItem.component";
 import InputForm from "../inputForm/inputForm.component";
@@ -67,6 +69,19 @@ const TodoList = () => {
   //   getTasks();
   // }, []);
 
+  const showToastSuccessMessage = () => {
+    toast.success("Task updated successfuly"),
+      {
+        position: toast.POSITION.TOP_RIGHT,
+      };
+  };
+
+  const showToastFailureMessage = () => {
+    toast.error("Task updated failed"),
+      {
+        position: toast.POSITION.TOP_RIGHT,
+      };
+  };
   const deleteAll = async () => {
     try {
       setLoading(true);
@@ -86,8 +101,10 @@ const TodoList = () => {
       const data = await response.data;
       console.log("deleted task successfully");
       setTasks(data);
+      showToastSuccessMessage();
     } catch (err) {
       console.log(`Error occurred while deleting tasks: ${err.message}`);
+      showToastFailureMessage();
     } finally {
       setLoading(false);
     }
@@ -124,6 +141,7 @@ const TodoList = () => {
             </button>
           </li>
         ))}
+        <ToastContainer />
         <div className="title_container">
           <TitleContainer />
           <LanguageSelector />

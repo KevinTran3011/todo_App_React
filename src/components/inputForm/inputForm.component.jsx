@@ -47,14 +47,14 @@ const InputForm = ({ setTasks, setLoading }) => {
 
       {formIsOpen && (
         <div className="inputForm">
-          <div className="input_Form--header">ADD A TASK</div>
+          <div className="input_Form--header">{t("inputForm.title")}</div>
           <div className="input_section--description">
-            <div className="input_Form ">Description</div>
+            <div className="input_Form ">{t("inputForm.description")}</div>
             <input
               type="text"
               className="addList_section--input"
               id="descriptionInput"
-              placeholder="Add a new task"
+              placeholder={t("inputForm.descriptionPlaceholder")}
               onChange={(e) =>
                 setNewTask({ ...newTask, description: e.target.value })
               }
@@ -63,12 +63,12 @@ const InputForm = ({ setTasks, setLoading }) => {
           </div>
 
           <div className="input_section--date">
-            <div className="input_Form ">Due Date</div>
+            <div className="input_Form ">{t("inputForm.dueDate")}</div>
             <input
               type="date"
               className="addList_section--input"
               id="dateInput"
-              placeholder="Due date"
+              placeholder={t("inputForm.dueDatePlaceholder")}
               onChange={(e) =>
                 setNewTask({ ...newTask, dueDate: e.target.value })
               }

@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
@@ -9,6 +12,7 @@ import axios from "axios";
 const TodoItem = (props) => {
   const { id, description, dueDate, setTasks, setLoading } = props;
   const [isCompleted, setIsCompleted] = useState(false);
+  const { t } = useTranslation();
 
   const reformatDate = (dueDate) => {
     const date = new Date(dueDate);
@@ -16,6 +20,20 @@ const TodoItem = (props) => {
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
+  };
+
+  const showToastSuccessMessage = () => {
+    toast.success("Task updated successfuly"),
+      {
+        position: toast.POSITION.TOP_RIGHT,
+      };
+  };
+
+  const showToastFailureMessage = () => {
+    toast.error("Task updated failed"),
+      {
+        position: toast.POSITION.TOP_RIGHT,
+      };
   };
 
   const deleteTask = async (id) => {
@@ -31,10 +49,12 @@ const TodoItem = (props) => {
       );
       const data = await tasks.data;
       setTasks(data);
+      showToastSuccessMessage();
     } catch (err) {
       console.log(
         `Error occurred while deleting task with id ${id}: ${err.message}`
       );
+      showToastFailureMessage();
     } finally {
       setLoading(false);
     }
@@ -42,14 +62,13 @@ const TodoItem = (props) => {
 
   const onDeleteButtonClick = (id) => {
     return Swal.fire({
-      title: `Are you sure you want to delete task with id: ${id}?`,
-      text: "Deleted task can't be reverted",
+      title: t("popUp.title"),
+      text: t("popUp.subTitle"),
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: {
-        text: "Yes",
-        onClick: () => deleteTask(id),
-      },
+      cancelButtonText: t("popUp.cancel"),
+      confirmButtonText: t("popUp.confirm"),
+      preConfirm: () => deleteTask(id),
     });
   };
   const completeTask = async (task) => {
@@ -69,10 +88,12 @@ const TodoItem = (props) => {
       );
       const data = await tasks.data;
       setTasks(data);
+      showToastSuccessMessage();
     } catch (err) {
       console.log(
         `Error occurred while completing task with id ${id} : ${err.message}`
       );
+      showToastFailureMessage();
     } finally {
       setLoading(false);
     }

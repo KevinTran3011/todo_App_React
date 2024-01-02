@@ -9,5 +9,20 @@
     "prompt": "Thêm nhiệm vụ mới",
     "search": "Tìm nhiệm vụ",
     "loading": "Đang tải dữ liệu..."
+  },
+
+  "inputForm": {
+    "title": "Hãy thêm một nhiệm vụ mới",
+    "description": "Mô tả",
+    "descriptionPlaceholder": "Mô tả nhiệm vụ",
+    "dueDate": "Hạn chót",
+    "dueDatePlaceholder": "Hạn chót"
+  },
+
+  "popUp": {
+    "title": "Bạn có chắc chắn muốn xóa vĩnh viễn nhiệm vụ này",
+    "subTitle": "Hành động này sẽ không thể hoàn tác",
+    "cancel": "hủy",
+    "confirm": "xóa"
   }
 }
