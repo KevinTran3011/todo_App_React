@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import SearchIcon from "@mui/icons-material/Search";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
 const SearchBar = ({ originalTasks, setTasks }) => {
   const [searchInput, setSearchInput] = useState("");
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const searchTask = (e) => {
     if (e.key === "Enter") {

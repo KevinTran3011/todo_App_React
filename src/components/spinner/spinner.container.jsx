@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 // LoadingSpinner component
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const LoadingSpinner = ({ loading }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   if (!loading) {
     return null;
   }

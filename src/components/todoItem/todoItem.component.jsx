@@ -3,6 +3,7 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const TodoItem = (props) => {
@@ -39,6 +40,18 @@ const TodoItem = (props) => {
     }
   };
 
+  const onDeleteButtonClick = (id) => {
+    return Swal.fire({
+      title: `Are you sure you want to delete task with id: ${id}?`,
+      text: "Deleted task can't be reverted",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: {
+        text: "Yes",
+        onClick: () => deleteTask(id),
+      },
+    });
+  };
   const completeTask = async (task) => {
     try {
       setLoading(true);
@@ -83,7 +96,7 @@ const TodoItem = (props) => {
       <div className="col-lg-2 col-md-2 col-sm-2">
         <button
           className="modified_button--delete"
-          onClick={() => deleteTask(id)}
+          onClick={() => onDeleteButtonClick(id)}
         >
           <DeleteIcon></DeleteIcon>{" "}
         </button>
