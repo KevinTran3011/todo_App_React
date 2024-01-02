@@ -19,6 +19,10 @@ const TodoList = () => {
   const [loading, setLoading] = useState(false);
   const { t, i18n } = useTranslation();
 
+  const locales = {
+    en: { title: "English" },
+    vi: { title: "Vietnamese" },
+  };
   useEffect(() => {
     const getTasks = async () => {
       try {
@@ -106,6 +110,20 @@ const TodoList = () => {
     <div className="container">
       {loading && <LoadingSpinner loading={loading} />}
       <div style={{ opacity: loading ? 0.5 : 1 }}>
+        {Object.keys(locales).map((locale) => (
+          <li key={locale}>
+            <button
+              style={{
+                fontWeight:
+                  i18n.resolvedLanguage === locale ? "bold" : "normal",
+              }}
+              type="submit"
+              onClick={() => i18n.changeLanguage(locale)}
+            >
+              {locales[locale].title}
+            </button>
+          </li>
+        ))}
         <div className="title_container">
           <TitleContainer />
           <LanguageSelector />
