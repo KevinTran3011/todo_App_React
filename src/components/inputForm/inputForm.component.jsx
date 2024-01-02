@@ -2,6 +2,7 @@
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
 
 const InputForm = ({ setTasks, setLoading }) => {
   const [formIsOpen, setFormIsOpen] = useState(false);
@@ -10,21 +11,17 @@ const InputForm = ({ setTasks, setLoading }) => {
   const addTask = async () => {
     try {
       setLoading(true);
-      await fetch(`https://658a8a68ba789a9622374750.mockapi.io/tasks`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(newTask),
-      });
 
-      const response = await fetch(
+      await axios.post(
         `https://658a8a68ba789a9622374750.mockapi.io/tasks`,
-        {
-          method: "GET",
-          headers: { "content-type": "application/json" },
-        }
+        newTask
       );
-      const data = await response.json();
-      setTasks(data);
+
+      const response = await axios.get(
+        `https://658a8a68ba789a9622374750.mockapi.io/tasks`
+      );
+      const data = await response.data;
+      setTasks(data.reverse());
       setFormIsOpen(false);
     } catch (err) {
       console.log("Error occured while fetching tasks : " + err.message);

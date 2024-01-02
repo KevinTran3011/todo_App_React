@@ -8,6 +8,7 @@
   border: 5px solid $font_color;
   border-radius: 5px;
   font-size: 20px;
+  padding: 5px;
 
   &--delete {
     @extend .modified_button;
@@ -22,7 +23,6 @@
   }
   &--completed {
     @extend .modified_button;
-
     background-color: $green;
   }
   &--add {

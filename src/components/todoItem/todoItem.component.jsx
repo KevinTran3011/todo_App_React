@@ -1,17 +1,13 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
+
 const TodoItem = (props) => {
-  const {
-    id,
-    description,
-    dueDate,
-    setTasks,
-    isCompleted,
-    setIsCompleted,
-    setLoading,
-  } = props;
+  const { id, description, dueDate, setTasks, setLoading } = props;
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const reformatDate = (dueDate) => {
     const date = new Date(dueDate);
@@ -24,19 +20,15 @@ const TodoItem = (props) => {
   const deleteTask = async (id) => {
     try {
       setLoading(true);
-      await fetch(`https://658a8a68ba789a9622374750.mockapi.io/tasks/${id}`, {
-        method: "DELETE",
-        headers: { "content-type": "application/json" },
-      });
-
-      const tasks = await fetch(
-        `https://658a8a68ba789a9622374750.mockapi.io/tasks`,
-        {
-          method: "GET",
-          headers: { "content-type": "application/json" },
-        }
+      await axios.delete(
+        `https://658a8a68ba789a9622374750.mockapi.io/tasks/${id}`
       );
-      const data = await tasks.json();
+      console.log(`Task with id ${id} has been deleted`);
+
+      const tasks = await axios.get(
+        `https://658a8a68ba789a9622374750.mockapi.io/tasks`
+      );
+      const data = await tasks.data;
       setTasks(data);
     } catch (err) {
       console.log(
@@ -51,26 +43,18 @@ const TodoItem = (props) => {
     try {
       setLoading(true);
       const { id, isCompleted } = task;
-      const response = await fetch(
+      const updatedResponse = await axios.put(
         `https://658a8a68ba789a9622374750.mockapi.io/tasks/${id}`,
-        {
-          method: "PUT",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ isCompleted: !isCompleted }),
-        }
+        { isCompleted: !isCompleted }
       );
-
-      const updatedTask = await response.json();
+      const updatedTask = updatedResponse.data;
       setIsCompleted(updatedTask.isCompleted);
+      console.log(`Sucessfully changed the complete state of task id ${id}`);
 
-      const tasks = await fetch(
-        `https://658a8a68ba789a9622374750.mockapi.io/tasks`,
-        {
-          method: "GET",
-          headers: { "content-type": "application/json" },
-        }
+      const tasks = await axios.get(
+        `https://658a8a68ba789a9622374750.mockapi.io/tasks`
       );
-      const data = await tasks.json();
+      const data = await tasks.data;
       setTasks(data);
     } catch (err) {
       console.log(

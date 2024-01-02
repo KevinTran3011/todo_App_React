@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import TitleContainer from "../titleContainer/titleContainer.component";
 import TodoItem from "../todoItem/todoItem.component";
 import InputForm from "../inputForm/inputForm.component";
@@ -11,7 +12,6 @@ import "../../todo.scss/main.scss";
 
 const TodoList = () => {
   const [tasks, setTasks] = useState([]);
-  const [isCompleted, setIsCompleted] = useState(false);
   const [originalTasks, setOriginalTasks] = useState(...tasks);
   const [isSorted, setIsSorted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,26 +20,45 @@ const TodoList = () => {
     const getTasks = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `https://658a8a68ba789a9622374750.mockapi.io/tasks`,
-          {
-            method: "GET",
-            headers: { "content-type": "application/json" },
-          }
+        const response = await axios.get(
+          `https://658a8a68ba789a9622374750.mockapi.io/tasks`
         );
-        const data = await response.json();
-        console.log(data);
+        const data = await response.data;
         setTasks(data);
         setOriginalTasks(data);
       } catch (err) {
-        console.log("Error occured while fetching tasks : " + err.message);
+        console.log("Error occured while fetching resources : " + err.message);
       } finally {
         setLoading(false);
       }
     };
-
     getTasks();
   }, []);
+
+  // useEffect(() => {
+  //   const getTasks = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const response = await fetch(
+  //         `https://658a8a68ba789a9622374750.mockapi.io/tasks`,
+  //         {
+  //           method: "GET",
+  //           headers: { "content-type": "application/json" },
+  //         }
+  //       );
+  //       const data = await response.json();
+  //       console.log(data);
+  //       setTasks(data);
+  //       setOriginalTasks(data);
+  //     } catch (err) {
+  //       console.log("Error occured while fetching tasks : " + err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   getTasks();
+  // }, []);
 
   const deleteAll = async () => {
     try {
@@ -48,24 +67,16 @@ const TodoList = () => {
       await Promise.all(
         tasks.map(async (task) => {
           const id = task.id;
-          await fetch(
-            `https://658a8a68ba789a9622374750.mockapi.io/tasks/${id}`,
-            {
-              method: "DELETE",
-              headers: { "content-type": "application/json" },
-            }
+          await axios.delete(
+            `https://658a8a68ba789a9622374750.mockapi.io/tasks/${id}`
           );
         })
       );
       // Fetch the updated list of tasks after deleting
-      const response = await fetch(
-        `https://658a8a68ba789a9622374750.mockapi.io/tasks`,
-        {
-          method: "GET",
-          headers: { "content-type": "application/json" },
-        }
+      const response = await axios.get(
+        `https://658a8a68ba789a9622374750.mockapi.io/tasks`
       );
-      const data = await response.json();
+      const data = await response.data;
       console.log("deleted task successfully");
       setTasks(data);
     } catch (err) {
@@ -135,7 +146,6 @@ const TodoList = () => {
                 description={task.description}
                 dueDate={task.dueDate}
                 isCompleted={task.isCompleted}
-                setIsCompleted={setIsCompleted}
                 setTasks={setTasks}
                 setLoading={setLoading}
               />
