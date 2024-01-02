@@ -1,7 +1,10 @@
+import { useTranslation, Trans } from "react-i18next";
+
 const TitleContainer = () => {
+  const { t, i18n } = useTranslation();
   return (
     <div className="title-container">
-      <div className="title">TO DO LIST</div>
+      <div className="title">{t("main.title")}</div>
     </div>
   );
 };

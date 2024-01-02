@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import SearchIcon from "@mui/icons-material/Search";
-
+import { useTranslation, Trans } from "react-i18next";
 import { useState } from "react";
 
 const SearchBar = ({ originalTasks, setTasks }) => {
   const [searchInput, setSearchInput] = useState("");
+  const { t, i18n } = useTranslation();
 
   const searchTask = (e) => {
     if (e.key === "Enter") {
@@ -21,7 +22,7 @@ const SearchBar = ({ originalTasks, setTasks }) => {
     <div className="search_bar">
       <input
         className="search_input"
-        placeholder="Search task"
+        placeholder={t("main.search")}
         id="search-Bar"
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}

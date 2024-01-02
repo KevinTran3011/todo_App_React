@@ -1,0 +1,13 @@
+{
+  "main": {
+    "title": "TO DO ",
+    "index": "Index",
+    "task": "Task",
+    "dueDate": "Due Date",
+    "completed": "Completed",
+    "delete": "Delete",
+    "prompt": "Add a new task",
+    "search": "Search task",
+    "loading": "Loading data"
+  }
+}

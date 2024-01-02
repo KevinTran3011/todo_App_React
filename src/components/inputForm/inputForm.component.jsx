@@ -2,11 +2,13 @@
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import { useTranslation, Trans } from "react-i18next";
 import axios from "axios";
 
 const InputForm = ({ setTasks, setLoading }) => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [newTask, setNewTask] = useState({ description: "", dueDate: "" });
+  const { t, i18n } = useTranslation();
 
   const addTask = async () => {
     try {
@@ -38,7 +40,7 @@ const InputForm = ({ setTasks, setLoading }) => {
             className="modified_button--completed"
             onClick={() => setFormIsOpen(true)}
           >
-            Add a new task
+            {t("main.prompt")}
           </button>
         </div>
       )}

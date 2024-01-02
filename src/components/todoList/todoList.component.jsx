@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import axios from "axios";
 import TitleContainer from "../titleContainer/titleContainer.component";
+import LanguageSelector from "../languageSelector/languageSelector.component";
 import TodoItem from "../todoItem/todoItem.component";
 import InputForm from "../inputForm/inputForm.component";
 import SearchBar from "../searchBar/searchBar.component";
@@ -15,6 +17,7 @@ const TodoList = () => {
   const [originalTasks, setOriginalTasks] = useState(...tasks);
   const [isSorted, setIsSorted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const getTasks = async () => {
@@ -105,6 +108,7 @@ const TodoList = () => {
       <div style={{ opacity: loading ? 0.5 : 1 }}>
         <div className="title_container">
           <TitleContainer />
+          <LanguageSelector />
         </div>
         <div className="todo_container">
           <InputForm setTasks={setTasks} setLoading={setLoading} />
@@ -112,13 +116,13 @@ const TodoList = () => {
 
           <li className="todo_list--header">
             <div className="col-lg-2 col-md-2 col-sm-2">
-              <div className="header">Index</div>
+              <div className="header">{t("main.index")}</div>
             </div>
             <div className="col-lg-3 col-md-3 col-sm-3">
-              <div className="header">Task</div>
+              <div className="header">{t("main.task")}</div>
             </div>
             <div className="col-lg-3 col-md-3 col-sm-3" id="due_date">
-              <div className="header">Due Date</div>
+              <div className="header">{t("main.dueDate")}</div>
               <div
                 className="sort_section"
                 id="sort_button"
@@ -132,10 +136,10 @@ const TodoList = () => {
             </div>
 
             <div className="col-lg-2 col-md-2 col-sm-2">
-              <div className="header">Completed</div>
+              <div className="header">{t("main.completed")}</div>
             </div>
             <div className="col-lg-2 col-md-2 col-sm-2">
-              <div className="header">Delete</div>
+              <div className="header">{t("main.delete")}</div>
             </div>
           </li>
           <ul className="todo_list">

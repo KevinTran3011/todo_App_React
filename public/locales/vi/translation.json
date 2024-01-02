@@ -1,0 +1,13 @@
+{
+  "main": {
+    "title": "Nhiệm vụ ",
+    "index": "Số",
+    "task": "Tên nhiệm vụ",
+    "dueDate": "Hạn chót ",
+    "completed": "Hoàn thành",
+    "delete": "xóa",
+    "prompt": "Thêm nhiệm vụ mới",
+    "search": "Tìm nhiệm vụ",
+    "loading": "Đang tải dữ liệu..."
+  }
+}
