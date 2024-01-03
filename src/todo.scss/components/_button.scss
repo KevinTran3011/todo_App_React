@@ -25,6 +25,15 @@
     @extend .modified_button;
     background-color: $green;
   }
+  &--language {
+    @extend .modified_button;
+    background-color: $task_color;
+    border-color: $title_color;
+    color: $font_color;
+    font-size: 14px;
+    padding: 5px;
+    margin: 5px;
+  }
   &--add {
     color: $green;
     background-color: $title_color;

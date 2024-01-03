@@ -2,6 +2,8 @@
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 
@@ -9,6 +11,20 @@ const InputForm = ({ setTasks, setLoading }) => {
   const [formIsOpen, setFormIsOpen] = useState(false);
   const [newTask, setNewTask] = useState({ description: "", dueDate: "" });
   const { t } = useTranslation();
+
+  const showAddTaskSuccessMessage = () => {
+    toast.success("Task added successfully"),
+      {
+        position: toast.POSITION.TOP_RIGHT,
+      };
+  };
+
+  const showAddTaskFailureMessage = () => {
+    toast.error("Task added failed"),
+      {
+        position: toast.POSITION.TOP_RIGHT,
+      };
+  };
 
   const addTask = async () => {
     try {
@@ -25,8 +41,10 @@ const InputForm = ({ setTasks, setLoading }) => {
       const data = await response.data;
       setTasks(data.reverse());
       setFormIsOpen(false);
+      showAddTaskSuccessMessage();
     } catch (err) {
       console.log("Error occured while fetching tasks : " + err.message);
+      showAddTaskFailureMessage();
     } finally {
       setLoading(false);
     }

@@ -1,0 +1,9 @@
+@use "../abstract/mixin" as *;
+.language_selector {
+  @include flex_center;
+  align-self: flex-end;
+
+  li {
+    list-style: none;
+  }
+}

@@ -4,11 +4,11 @@ import axios from "axios";
 import TitleContainer from "../titleContainer/titleContainer.component";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LanguageSelector from "../languageSelector/languageSelector.component";
 import TodoItem from "../todoItem/todoItem.component";
 import InputForm from "../inputForm/inputForm.component";
 import SearchBar from "../searchBar/searchBar.component";
 import SortIcon from "@mui/icons-material/Sort";
+import LanguageIcon from "@mui/icons-material/Language";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import LoadingSpinner from "../spinner/spinner.container";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,6 +19,7 @@ const TodoList = () => {
   const [originalTasks, setOriginalTasks] = useState(...tasks);
   const [isSorted, setIsSorted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isOpen, setisOpen] = useState(false);
   const { t, i18n } = useTranslation();
 
   const locales = {
@@ -44,30 +45,9 @@ const TodoList = () => {
     getTasks();
   }, []);
 
-  // useEffect(() => {
-  //   const getTasks = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const response = await fetch(
-  //         `https://658a8a68ba789a9622374750.mockapi.io/tasks`,
-  //         {
-  //           method: "GET",
-  //           headers: { "content-type": "application/json" },
-  //         }
-  //       );
-  //       const data = await response.json();
-  //       console.log(data);
-  //       setTasks(data);
-  //       setOriginalTasks(data);
-  //     } catch (err) {
-  //       console.log("Error occured while fetching tasks : " + err.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   getTasks();
-  // }, []);
+  const openLanguageBox = () => {
+    setisOpen(!isOpen);
+  };
 
   const showToastSuccessMessage = () => {
     toast.success("Task updated successfuly"),
@@ -127,24 +107,33 @@ const TodoList = () => {
     <div className="container">
       {loading && <LoadingSpinner loading={loading} />}
       <div style={{ opacity: loading ? 0.5 : 1 }}>
-        {Object.keys(locales).map((locale) => (
-          <li key={locale}>
-            <button
-              style={{
-                fontWeight:
-                  i18n.resolvedLanguage === locale ? "bold" : "normal",
-              }}
-              type="submit"
-              onClick={() => i18n.changeLanguage(locale)}
-            >
-              {locales[locale].title}
-            </button>
-          </li>
-        ))}
+        <LanguageIcon
+          fontSize="large"
+          className="language_icon"
+          style={{ color: "white" }}
+          onClick={() => openLanguageBox()}
+        ></LanguageIcon>
+        {isOpen
+          ? Object.keys(locales).map((locale) => (
+              <li key={locale} className="language_selector">
+                <button
+                  className="modified_button--language"
+                  style={{
+                    fontWeight:
+                      i18n.resolvedLanguage === locale ? "bold" : "normal",
+                    color: i18n.resolvedLanguage === locale ? "white" : "black",
+                  }}
+                  type="submit"
+                  onClick={() => i18n.changeLanguage(locale)}
+                >
+                  {locales[locale].title}
+                </button>
+              </li>
+            ))
+          : null}
         <ToastContainer />
         <div className="title_container">
           <TitleContainer />
-          <LanguageSelector />
         </div>
         <div className="todo_container">
           <InputForm setTasks={setTasks} setLoading={setLoading} />
